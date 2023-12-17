@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Link,
   Outlet,
-  useLocation,
   useNavigate,
   useParams,
 } from 'react-router-dom';
@@ -26,7 +25,7 @@ const MovieDetails = () => {
   if (!movie) {
     return <h1>Loading...</h1>;
   }
-  const { original_title, release_date, poster_path, media_type, overview } =
+  const { original_title, poster_path, media_type, overview } =
     movie;
 
   return (
