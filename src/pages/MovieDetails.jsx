@@ -60,7 +60,7 @@ const MovieDetails = () => {
 
       <div>
         <h1 className="title">
-          {original_title} ({release_date})
+          {original_title} ({new Date(movie.release_date).getFullYear()})
         </h1>
         <p>User Score: {movie.vote_average?.toFixed(1) * 10}%</p>
         <h2>Overview</h2>
