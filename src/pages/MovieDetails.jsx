@@ -32,16 +32,19 @@ const MovieDetails = () => {
   return (
     <div>
       <button onClick={handleGoBack}>Go back</button>
-      <img
-        src={
-          poster_path
-            ? `${`https://image.tmdb.org/t/p/w500` + poster_path}`
-            : ''
-        }
-        alt={media_type}
-        width="200px"
-        height="300px"
-      />
+      <div>
+        <img
+          src={
+            poster_path
+              ? `${`https://image.tmdb.org/t/p/w500` + poster_path}`
+              : ''
+          }
+          alt={media_type}
+          width="200px"
+          height="300px"
+        />
+      </div>
+
       {/* {movie.poster_path === null ? (
             <img
               src={`https://upload.wikimedia.org/wikipedia/commons/c/c2/No_image_poster.png?20170513175923`}
