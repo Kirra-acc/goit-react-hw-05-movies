@@ -1,30 +1,22 @@
-// import React from 'react'
-
-// const Cast = () => {
-//   return (
-//     <div>Cast</div>
-//   )
-// }
-
-// export default Cast
-
-import React, { useEffect, useState } from 'react';
+// import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieCast } from 'services/api';
+import { useHttp } from './hooks/useHttp';
 
 const Cast = () => {
   const { movieId } = useParams();
-  const [cast, setCast] = useState([]);
 
-  useEffect(() => {
-    fetchMovieCast(movieId).then(res => setCast(res.cast));
-  }, [movieId]);
+  // const [cast, setCast] = useState([]);
+  // useEffect(() => {
+  //   fetchMovieCast(movieId).then(res => setCast(res.cast));
+  // }, [movieId]);
+  const [cast] = useHttp(fetchMovieCast, movieId);
 
   // const { id, profile_path, name, character } = actor;
   return (
     <div>
       <ul>
-        {cast.map(actor => (
+        {cast?.map(actor => (
           <div key={actor.id}>
             <img
               src={

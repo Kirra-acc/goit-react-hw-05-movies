@@ -19,7 +19,7 @@ export const fetchTrendingMovies = async () => {
     },
   });
   console.log(data);
-  return data;
+  return data.results;
 };
 
 export const fetchTrendingMovieById = async id => {
@@ -42,7 +42,7 @@ export const fetchMovieCast = async id => {
     }
   );
   console.log(data);
-  return data;
+  return data.cast;
 };
 
 export const fetchMovieReviews = async id => {

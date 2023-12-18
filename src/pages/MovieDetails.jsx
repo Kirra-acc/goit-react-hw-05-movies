@@ -1,10 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Link,
-  Outlet,
-  useNavigate,
-  useParams,
-} from 'react-router-dom';
+import { useHttp } from 'components/hooks/useHttp';
+// import React, { useEffect, useState } from 'react';
+import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
 import { fetchTrendingMovieById } from 'services/api';
 
 const MovieDetails = () => {
@@ -12,11 +8,12 @@ const MovieDetails = () => {
   const navigate = useNavigate();
   // const location = useLocation();
   // const goBackRef = useRef(location.state?.from ?? '/');
-  const [movie, setMovie] = useState([null]);
 
-  useEffect(() => {
-    fetchTrendingMovieById(movieId).then(res => setMovie(res));
-  }, [movieId]);
+  // const [movie, setMovie] = useState([null]);
+  // useEffect(() => {
+  //   fetchTrendingMovieById(movieId).then(res => setMovie(res));
+  // }, [movieId]);
+  const [movie] = useHttp(fetchTrendingMovieById, movieId);
 
   const handleGoBack = () => {
     navigate('/');
@@ -25,8 +22,7 @@ const MovieDetails = () => {
   if (!movie) {
     return <h1>Loading...</h1>;
   }
-  const { original_title, poster_path, media_type, overview } =
-    movie;
+  const { original_title, poster_path, media_type, overview } = movie;
 
   return (
     <div>
