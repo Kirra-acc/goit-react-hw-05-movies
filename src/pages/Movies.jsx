@@ -2,10 +2,9 @@
 import {
   Link,
   useLocation,
-  useParams,
   useSearchParams,
 } from 'react-router-dom';
-import { fetchSearchedMovie, fetchTrendingMovies } from 'services/api';
+import { fetchSearchedMovie } from 'services/api';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
