@@ -1,6 +1,6 @@
 import { useHttp } from 'components/hooks/useHttp';
 // import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { fetchTrendingMovies } from 'services/api';
 
 const Home = () => {
@@ -9,6 +9,7 @@ const Home = () => {
   //   fetchTrendingMovies().then(res => setMovies(res.results));
   // }, []);
   const [movies] = useHttp(fetchTrendingMovies);
+  const location = useLocation();
 
   return (
     <div>
@@ -16,7 +17,7 @@ const Home = () => {
       <ul>
         {movies?.map(movie => (
           <li key={movie.id}>
-            <Link to={movie.id.toString()}>{movie.title}</Link>
+            <Link state={{ from: location }} to={movie.id.toString()}>{movie.title}</Link>
           </li>
         ))}
       </ul>

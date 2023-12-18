@@ -1,12 +1,22 @@
 import { useHttp } from 'components/hooks/useHttp';
+import { useRef } from 'react';
+import { FaLongArrowAltLeft } from 'react-icons/fa';
+
 // import React, { useEffect, useState } from 'react';
-import { Link, Outlet, useNavigate, useParams } from 'react-router-dom';
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import { fetchTrendingMovieById } from 'services/api';
+import styled from 'styled-components';
 
 const MovieDetails = () => {
   const { movieId } = useParams();
   const navigate = useNavigate();
-  // const location = useLocation();
+
   // const goBackRef = useRef(location.state?.from ?? '/');
 
   // const [movie, setMovie] = useState([null]);
@@ -14,9 +24,11 @@ const MovieDetails = () => {
   //   fetchTrendingMovieById(movieId).then(res => setMovie(res));
   // }, [movieId]);
   const [movie] = useHttp(fetchTrendingMovieById, movieId);
+  const location = useLocation();
+  const goBackRef = useRef(location.state?.from);
 
   const handleGoBack = () => {
-    navigate('/');
+    navigate(goBackRef.current);
   };
 
   if (!movie) {
@@ -25,22 +37,28 @@ const MovieDetails = () => {
   const { original_title, poster_path, media_type, overview } = movie;
 
   return (
-    <div>
-      <button onClick={handleGoBack}>Go back</button>
+    <>
       <div>
-        <img
-          src={
-            poster_path
-              ? `${`https://image.tmdb.org/t/p/w500` + poster_path}`
-              : ''
-          }
-          alt={media_type}
-          width="200px"
-          height="300px"
-        />
+        <StyledBtn onClick={handleGoBack}>
+          <FaLongArrowAltLeft />
+          Go back
+        </StyledBtn>
       </div>
+      <StyledMovie>
+        <div>
+          <img
+            src={
+              poster_path
+                ? `${`https://image.tmdb.org/t/p/w500` + poster_path}`
+                : ''
+            }
+            alt={media_type}
+            width="300px"
+            height="450px"
+          />
+        </div>
 
-      {/* {movie.poster_path === null ? (
+        {/* {movie.poster_path === null ? (
             <img
               src={`https://upload.wikimedia.org/wikipedia/commons/c/c2/No_image_poster.png?20170513175923`}
               alt={movie.title}
@@ -51,20 +69,24 @@ const MovieDetails = () => {
               alt={movie.title}
             />
           )} */}
-      {/* <p>{movie.title}</p> */}
+        {/* <p>{movie.title}</p> */}
 
-      <div>
-        <h1 className="title">
-          {original_title} ({new Date(movie.release_date).getFullYear()})
-        </h1>
-        <p>User Score: {movie.vote_average?.toFixed(1) * 10}%</p>
-        <h2>Overview</h2>
-        <p>{overview}</p>
-        <h2>Genres </h2>
-        {movie.genres?.map(genre => (
-          <p key={genre.id}>{genre.name}</p>
-        ))}
-      </div>
+        <div>
+          <h1 className="title">
+            {original_title} ({new Date(movie.release_date).getFullYear()})
+          </h1>
+          <p>User Score: {movie.vote_average?.toFixed(1) * 10}%</p>
+          <h2>Overview</h2>
+          <p>{overview}</p>
+          <StyledGenresTitle>Genres </StyledGenresTitle>
+          <StyledGenres>
+            {movie.genres?.map(genre => (
+              <p key={genre.id}>{genre.name}</p>
+            ))}
+          </StyledGenres>
+        </div>
+      </StyledMovie>
+
       <hr />
 
       <div>
@@ -81,8 +103,29 @@ const MovieDetails = () => {
       <hr />
 
       <Outlet />
-    </div>
+    </>
   );
 };
 
 export default MovieDetails;
+
+const StyledMovie = styled.div`
+  display: flex;
+  /* align-items: center; */
+  background-color: white;
+  gap: 20px;
+`;
+const StyledGenresTitle = styled.h2`
+  margin: 21px auto;
+`;
+const StyledGenres = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+const StyledBtn = styled.button`
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+`;
