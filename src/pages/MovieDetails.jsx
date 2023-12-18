@@ -1,5 +1,5 @@
 import { useHttp } from 'components/hooks/useHttp';
-import { useRef } from 'react';
+import { Suspense, useRef } from 'react';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
 
 // import React, { useEffect, useState } from 'react';
@@ -102,7 +102,9 @@ const MovieDetails = () => {
       </div>
       <hr />
 
-      <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
