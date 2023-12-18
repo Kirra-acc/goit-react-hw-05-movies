@@ -25,7 +25,7 @@ const MovieDetails = () => {
   // }, [movieId]);
   const [movie] = useHttp(fetchTrendingMovieById, movieId);
   const location = useLocation();
-  const goBackRef = useRef(location.state?.from);
+  const goBackRef = useRef(location.state?.from || '/movies');
 
   const handleGoBack = () => {
     navigate(goBackRef.current);

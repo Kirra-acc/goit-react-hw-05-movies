@@ -1,41 +1,63 @@
 import { useHttp } from 'components/hooks/useHttp';
 // import React, { useEffect, useState } from 'react';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
-import { fetchTrendingMovies } from 'services/api';
+import {
+  Link,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from 'react-router-dom';
+import { fetchSearchedMovie, fetchTrendingMovies } from 'services/api';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 const Movies = () => {
-  // const [movies, setMovies] = useState([]);
-  // useEffect(() => {
-  //   fetchTrendingMovies().then(res => setMovies(res.results));
-  // }, []);
-  const [movies] = useHttp(fetchTrendingMovies);
+  const [inputValue, setInputValue] = useState('');
 
   const [searchParams, setSearchParams] = useSearchParams();
+  const movie = searchParams.get('movie') || '';
+  const { movieId } = useParams();
+  const [movies, setMovies] = useState([]);
+  useEffect(() => {
+    async function getNewMovies() {
+      try {
+        const moviesDataNew = await fetchSearchedMovie(movie);
+        setMovies(moviesDataNew);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getNewMovies();
+  }, [movie]);
   const location = useLocation();
 
-  const name = searchParams.get('name') || '';
-  const getFilteredMovies = movies?.filter(movie =>
-    movie.title.toLowerCase().includes(name.toLowerCase())
-  );
+  const savedSearch = query => {
+    query !== '' ? setSearchParams({ movie: query }) : setSearchParams({});
+  };
+
+  const onSubmit = e => {
+    e.preventDefault();
+    savedSearch(inputValue);
+  };
+
+  // const [movies, setMovies] = useHttp(fetchSearchedMovie, inputValue);
 
   return (
     <div>
-      <h2>Movies</h2>
       <div>
-        <input
-          value={name}
-          onChange={e =>
-            setSearchParams(e.target.value ? { name: e.target.value } : {})
-          }
-          placeholder="Enter movie name"
-        />
-        <button>Search</button>
+        <StyledForm onSubmit={onSubmit}>
+          <input
+            value={inputValue}
+            onChange={e => setInputValue(e.target.value)}
+            type="text"
+          ></input>
+          <button type="submit">Search</button>
+        </StyledForm>
       </div>
       <ul>
-        {getFilteredMovies?.map(movie => (
+        {movies?.map(movie => (
           <li key={movie.id}>
             <Link state={{ from: location }} to={movie.id.toString()}>
-              {movie.title}
+              <p>{movie.title}</p>
             </Link>
           </li>
         ))}
@@ -45,3 +67,19 @@ const Movies = () => {
 };
 
 export default Movies;
+
+
+const StyledForm = styled.form`
+  margin-top: 10px;
+  input {
+    width: 300px;
+    height: 20px;
+    border: 1px solid #b5b0b0;
+    border-radius: 3px;
+  }
+  button {
+    border: 1px solid #b5b0b0;
+    height: 24px;
+    border-radius: 3px;
+  }
+`;

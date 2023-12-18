@@ -13,7 +13,6 @@ export const App = () => {
     <>
       <Routes>
         <Route path="/" element={<Layout />}>
-          
           <Route index element={<Home />} />
           
           <Route path="/:movieId" element={<MovieDetails />}>
