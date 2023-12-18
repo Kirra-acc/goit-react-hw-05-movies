@@ -1,5 +1,4 @@
-import { useHttp } from 'components/hooks/useHttp';
-// import React, { useEffect, useState } from 'react';
+// import { useHttp } from 'components/hooks/useHttp';
 import {
   Link,
   useLocation,
@@ -15,7 +14,7 @@ const Movies = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const movie = searchParams.get('movie') || '';
-  const { movieId } = useParams();
+  // const { movieId } = useParams();
   const [movies, setMovies] = useState([]);
   useEffect(() => {
     async function getNewMovies() {
@@ -67,7 +66,6 @@ const Movies = () => {
 };
 
 export default Movies;
-
 
 const StyledForm = styled.form`
   margin-top: 10px;

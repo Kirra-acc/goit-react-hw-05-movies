@@ -13,13 +13,10 @@ const Layout = () => {
         </nav>
       </StyledHeader>
       <div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Outlet />
-      </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Outlet />
+        </Suspense>
       </div>
-      {/* <footer>
-        <h2>&copy; All rights reserved 2023</h2>
-      </footer> */}
     </div>
   );
 };

@@ -57,20 +57,6 @@ const MovieDetails = () => {
             height="450px"
           />
         </div>
-
-        {/* {movie.poster_path === null ? (
-            <img
-              src={`https://upload.wikimedia.org/wikipedia/commons/c/c2/No_image_poster.png?20170513175923`}
-              alt={movie.title}
-            />
-          ) : (
-            <img
-              src={`${`https://image.tmdb.org/t/p/w500` + movie.poster_path}`}
-              alt={movie.title}
-            />
-          )} */}
-        {/* <p>{movie.title}</p> */}
-
         <div>
           <h1 className="title">
             {original_title} ({new Date(movie.release_date).getFullYear()})
