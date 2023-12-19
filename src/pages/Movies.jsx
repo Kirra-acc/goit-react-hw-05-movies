@@ -28,13 +28,13 @@ const Movies = () => {
   }, [movie]);
   const location = useLocation();
 
-  const savedSearch = query => {
-    query !== '' ? setSearchParams({ movie: query }) : setSearchParams({});
-  };
+  // const savedSearch = query => {
+  //   query !== '' ? setSearchParams({ movie: query }) : setSearchParams({});
+  // };
 
   const onSubmit = e => {
     e.preventDefault();
-    savedSearch(inputValue);
+    setSearchParams({ movie: inputValue });
   };
 
   // const [movies, setMovies] = useHttp(fetchSearchedMovie, inputValue);

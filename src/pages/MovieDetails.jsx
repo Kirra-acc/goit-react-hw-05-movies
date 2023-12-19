@@ -1,4 +1,4 @@
-import { useHttp } from 'components/hooks/useHttp';
+import { useHttp } from 'hooks/useHttp';
 import { Suspense, useRef } from 'react';
 import { FaLongArrowAltLeft } from 'react-icons/fa';
 

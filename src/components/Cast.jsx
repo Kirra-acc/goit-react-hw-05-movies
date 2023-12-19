@@ -1,7 +1,7 @@
 // import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMovieCast } from 'services/api';
-import { useHttp } from './hooks/useHttp';
+import { useHttp } from '../hooks/useHttp';
 
 const Cast = () => {
   const { movieId } = useParams();
